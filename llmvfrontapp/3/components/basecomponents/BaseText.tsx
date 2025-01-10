@@ -1,36 +1,46 @@
 import {
-  StyleProp,
+  RegisteredStyle,
   StyleSheet,
   Text,
   TextStyle,
-  useColorScheme,
   View,
+  TextProps,
 } from "react-native";
-import React from "react";
-import { TextProps } from "../Themed";
+import React, { CSSProperties, ReactNode } from "react";
+import colours from "@/config/colours";
+// import { calculateX, calculateY } from "@/utils/screensizing";
 
 interface Props {
-  text: string;
-  colour?: string;
-  fontSize?: number;
-  darkModeColour?: string;
-  lightModeColour?: string;
-  textStyles?: StyleProp<TextStyle>;
+  size?: number;
+  alignCenter?: string;
+  style?: TextProps["style"];
+  children: ReactNode;
+  lines?: number;
 }
 const BaseText = ({
-  fontSize = 12,
-  colour,
-  darkModeColour = "white",
-  lightModeColour = "black",
-  text,
-  textStyles,
+  size,
+  lines,
+  alignCenter,
+  style,
+  children,
+  ...props
 }: Props) => {
-  const colourScheme = useColorScheme();
-  const defaultColour =
-    colour || (colourScheme === "dark" ? darkModeColour : lightModeColour);
   return (
-    <Text style={[{ fontSize, color: defaultColour }, textStyles]}>{text}</Text>
+    <Text
+      style={[styles.default, style, { fontSize: size ? size : 14 }]}
+      numberOfLines={lines}
+      adjustsFontSizeToFit
+      {...props}
+    >
+      {children}
+    </Text>
   );
 };
 
 export default BaseText;
+
+const styles = StyleSheet.create({
+  default: {
+    color: colours.black,
+  },
+});
