@@ -22,6 +22,7 @@
     "expo": ">=52.0.0-0 <53.0.0",
     "expo-font": "~13.0.2",
     "expo-gl": "~15.0.2",
+    "expo-linear-gradient": "^14.0.1",
     "expo-linking": "~7.0.3",
     "expo-router": "~4.0.16",
     "expo-splash-screen": "~0.29.19",
