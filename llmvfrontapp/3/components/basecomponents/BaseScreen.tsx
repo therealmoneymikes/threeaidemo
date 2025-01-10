@@ -7,7 +7,7 @@ import {
 } from "react-native";
 import React, { ReactNode, useEffect, useState } from "react";
 import Constants from "expo-constants";
-import colours from "@/app/config/colours";
+import colours from "@/config/colours";
 import { LinearGradient } from "expo-linear-gradient";
 
 interface Props {
