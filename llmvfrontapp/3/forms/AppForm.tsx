@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View } from "react-native";
 import React, { ReactElement } from "react";
-import { Formik, Field } from "formik";
+import { Formik } from "formik";
 
 interface Props {
   initialValues: any;
