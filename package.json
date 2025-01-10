@@ -10,6 +10,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "formik": "^2.4.6",
     "react-native-reanimated": "^3.16.6"
   }
 }
