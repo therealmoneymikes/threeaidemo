@@ -1,22 +1,24 @@
 const { getDefaultConfig } = require("expo/metro-config");
+const { withNativeWind } = require("nativewind/metro");
 
 /**
- * Metro configuration
- * https://metrobundler.dev/docs/configuration
- *
  * @type {import('metro-config').MetroConfig}
  */
-
 module.exports = (() => {
   const config = getDefaultConfig(__dirname);
 
-  const { resolver } = config;
-
+  // Update resolver settings
   config.resolver = {
-    ...resolver,
-    assetExts: [...(resolver.assetExts || []), "glb", "gltf", "png", "jpg"],
+    ...config.resolver,
+    assetExts: [
+      ...(config.resolver.assetExts || []), // Ensure existing extensions are included
+      "glb",
+      "gltf",
+      "png",
+      "jpg",
+    ],
     sourceExts: [
-      ...resolver.sourceExts,
+      ...(config.resolver.sourceExts || []),
       "glb",
       "js",
       "jsx",
@@ -28,5 +30,6 @@ module.exports = (() => {
     ],
   };
 
-  return config;
+  // Apply NativeWind configuration
+  return withNativeWind(config, { input: "./global.css" });
 })();
