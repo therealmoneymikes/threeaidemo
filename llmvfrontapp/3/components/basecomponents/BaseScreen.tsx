@@ -15,7 +15,7 @@ interface Props {
   style?: StyleProp<ViewStyle>;
   backgroundColor?: ViewStyle["backgroundColor"];
   gradient?: boolean;
-  gradientColours?: readonly [string, string];
+  gradientColours?: string[] | [string, string];
   animateBackground?: boolean;
   startRangeColour?: string;
   endRangeColour?: string;
@@ -77,12 +77,12 @@ const BaseScreen = ({
   const startColor = interpolatedStartColor.interpolate({
     inputRange: [0, 1],
     outputRange: [startRangeColour, endRangeColour],
-  });
+  }) as Animated.AnimatedInterpolation<string>;
 
   const endColor = interpolatedEndColor.interpolate({
     inputRange: [0, 1],
     outputRange: [endRangeColour, startRangeColour],
-  });
+  }) as Animated.AnimatedInterpolation<string>;
 
   const AnimatedLinearGradient =
     Animated.createAnimatedComponent(LinearGradient);
@@ -92,9 +92,7 @@ const BaseScreen = ({
       start={{ x: 0, y: 0 }}
       end={{ x: 1, y: 1 }}
       colors={
-        animateBackground
-          ? [startColor as any, endColor as any]
-          : gradientColours
+        animateBackground ? ([startColor, endColor] as any) : gradientColours
       }
       style={[styles.default, style]}
     >
