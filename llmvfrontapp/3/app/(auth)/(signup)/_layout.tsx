@@ -2,7 +2,7 @@ import { Stack } from "expo-router";
 
 
 
-const InductionLayout = () => {
+const SignUpLayout = () => {
     return (
         <Stack initialRouteName="HomeScreen">
             <Stack.Screen name="HomeScreen" options={{headerShown: false}}/>
@@ -11,4 +11,4 @@ const InductionLayout = () => {
     )
 }
 
-export default InductionLayout
+export default SignUpLayout;
