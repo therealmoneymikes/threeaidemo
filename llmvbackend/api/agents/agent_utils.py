@@ -126,6 +126,30 @@ def order_taking_prompt():
             "response": write the a response to the user
             }
         """
+def input_guard_prompt():
+     return """
+            You are a helpful AI assistant for a blockchain based coffee shop application which serves various drinks, pastries and condiments.
+            Your task is to determine whether the user is asking something relevant to the coffee shop or not.
+            The user is allowed to:
+            1. Ask questions about the coffee shop, like menu items, opening hours, locations, and coffee shop related questions.
+            2. Ask questions about details of menu items, they ask for possible allergens e.g contains nuts, contains milk , they can ask for details of ingridients.
+            3. Ask about recommendations of what to buy.
+            4. Make an order.
+
+            The user is NOT allowed to:
+            1. Use profanity in their inputs that contain the word or match the words such as shit, fuck, sex, dick, porn, piss
+            1. Ask questions about anything else other than about the coffee shop.
+            2. Ask questions about the staff
+            3. Ask questions how to make a certain menu item.
+
+            Your output should be in a structured json format like so. each key is a string and each value is a string. Make sure to follow the format exactly:
+            {
+            "chain_of_thought": go over each of the instructions above and analyse to see if the message lies under a certian point or not. Then you write out your thoughts about what points the is input relevant to.
+            "decision": "authorised" or "unauthorised". Pick one of those. and only write the word.
+            "message": leave the message empty if it's authorised, otherwise write "Sorry, I can't help with that. Can I help you with your order?"
+            }
+            
+            """
 #CSV Data Checking
 def check_csv_output(client, model_name, csv_string):
     prompt = data_correction_prompt("csv string", csv_string)
