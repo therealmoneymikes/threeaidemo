@@ -6,7 +6,7 @@ from openai import OpenAI
 from copy import deepcopy
 from dotenv import load_dotenv
 load_dotenv()
-
+from agent_utils import main_system_prompt, get_agent_response, main_shop_agent_prompt
 
 class RecommendationAgent():
     def __init__(self, apriori_rec_path, popular_rec_path):
@@ -29,9 +29,8 @@ class RecommendationAgent():
         self.product_categories = self.popular_recommendations["product_category"]
     
     
+  
     #Recommendation Classifications
-    
-    
     def get_apriori_recommendations(self, products, top_k=5):
         recommendation_list = [] ##Initialised an empty list to store recommendations
         #loop of the array of products from the popular recommendations
@@ -97,6 +96,99 @@ class RecommendationAgent():
         recommendations = recommendations_dataframe['product'].tolist()[:top_k]
         return recommendations
     
+    # Geenerate after processing classifications
+    def generate_postprocess_classfication(self, output: str) -> dict:
+        output = json.loads(output) 
+        
+        output_object = {
+            "recommendation_type": output["recommendation_type"],
+            "parameters": output["parameters"]
+        }
+        
+        return output_object
     
+    #Generate the responses after processing data by data category
+    def generate_postprocess(self, output):
+        output = {
+            "role": "assistant", #Agent role as assistant
+            "content": output, # data from response from the agent
+            "memory": {"agent": "recommendation_agent"} # memory of recommendation agent data
+        }
+
+    #generate the recommendation classifications
+    def agent_recommendation_classification(self, messages):
+        #Main System prompt from utils
+        system_prompt = main_system_prompt(self.products, self.product_categories)
+        
+        #Get input messages from client
+        input_messages = [{"role": "system", "content": system_prompt}] + messages[-3:]
+        
+        #Get Chatbot agents response
+        chatbot_agent_output = get_agent_response(self.client,self.model_name,input_messages)
+        output = self.generate_postprocess_classfication(chatbot_agent_output)
+        return output
+   
+   
+    def get_response(self,messages):
+        messages = deepcopy(messages)
+
+        recommendation_classification = self.agent_recommendation_classification(messages)
+        recommendation_type = recommendation_classification['recommendation_type']
+        recommendations = []
+        # Recommendations from apriori
+        if recommendation_type == "apriori":
+            recommendations = self.get_apriori_recommendations(recommendation_classification['parameters'])
+        # Recommendations from popular
+        elif recommendation_type == "popular":
+            recommendations = self.get_popular_recommendations()
+        # Recommendations from popular data by category
+        elif recommendation_type == "popular by category":
+            recommendations = self.get_popular_recommendations(recommendation_classification['parameters'])
+        
+        #If not no recommendations provided
+        if recommendations == []:
+            return {"role": "assistant", "content":"Sorry, I can't help with that. Can I help you with your order?"}
+        
+        # Respond to User
+        recommendations_str = ", ".join(recommendations)
+        
+        #Get Main Shop Agent Propt
+        system_prompt = main_shop_agent_prompt()
+        
+        prompt = f"""
+        {messages[-1]['content']}
+
+        Please recommend me those items exactly: {recommendations_str}
+        """
+
+        messages[-1]['content'] = prompt
+        input_messages = [{"role": "system", "content": system_prompt}] + messages[-3:]
+
+        chatbot_output = get_agent_response(self.client,self.model_name,input_messages)
+        output = self.generate_postprocess(chatbot_output)
+
+        return output
     
-      
+    def get_order_recommedations(self, messages, order):
+        products = []
+        for product in order:
+            products.append(product['item'])
+            
+        recommendations = self.get_apriori_recommendations(products) ##Map apriori recommendations
+        recommendations_str = ", ".join(recommendations)
+        
+        system_prompt = main_shop_agent_prompt()
+        
+        prompt = f"""
+        {messages[-1]['content']}
+
+        Please recommend me those exact items: {recommendations_str}
+        """
+
+        messages[-1]['content'] = prompt #set the most recent message in the list
+        input_messages = [{"role": "system", "content": system_prompt}] + messages[-3:]
+
+        chatbot_output = get_agent_response(self.client,self.model_name,input_messages)
+        output = self.generate_postprocess(chatbot_output)
+        
+        return output
