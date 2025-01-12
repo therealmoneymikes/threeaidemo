@@ -52,12 +52,13 @@ export default function RootLayout() {
 
 function RootLayoutNav() {
   const colorScheme = useColorScheme();
-//Theme Provider Error colorScheme?.trim()
+  //Theme Provider Error colorScheme?.trim()
   return (
     <ThemeProvider
       value={colorScheme?.trim() === "dark" ? DarkTheme : DefaultTheme}
     >
       <Stack>
+        <Stack.Screen name="(induction)" options={{ headerShown: false }} />
         <Stack.Screen name="(auth)" options={{ headerShown: false }} />
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="modal" options={{ presentation: "modal" }} />

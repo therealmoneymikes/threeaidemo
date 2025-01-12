@@ -17,3 +17,5 @@ const InductionLayout = () => {
     </Stack>
   );
 };
+
+export default InductionLayout
