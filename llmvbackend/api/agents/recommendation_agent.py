@@ -104,12 +104,9 @@ class RecommendationAgent():
         
         #Checking if product cateogries have been added
         if product_categories is not None:
-            #Set category key
-            recommendation_category_key = self.popular_recommendations["product_category"] 
-            #Set values of the categories to the recommendations dataframe
-            recommendations_dataframe = self.popular_recommendations[recommendation_category_key.isin(product_categories)]
-         #Sorting by number of transaction, the more transcations meaning more popular
-        recommendations_dataframe = recommendations_dataframe.sort_values(by="number_of_transactions", ascending=False)
+            recommendations_dataframe = self.popular_recommendations[self.popular_recommendations['product_category'].isin(product_categories)]
+        recommendations_dataframe = recommendations_dataframe.sort_values(by='number_of_transactions',ascending=False)
+        
        
        #Check if the first index of the dataframe shape is 0
         if recommendations_dataframe.shape[0] == 0:
