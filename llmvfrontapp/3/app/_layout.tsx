@@ -10,7 +10,7 @@ import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
 import "react-native-reanimated";
 import { Slot } from "expo-router";
-import "../global.css"
+import "../global.css";
 import { useColorScheme } from "@/components/useColorScheme";
 
 export {
@@ -52,10 +52,12 @@ export default function RootLayout() {
 
 function RootLayoutNav() {
   const colorScheme = useColorScheme();
-
+//Theme Provider Error colorScheme?.trim()
   return (
-    <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-      <Stack initialRouteName="(auth)">
+    <ThemeProvider
+      value={colorScheme?.trim() === "dark" ? DarkTheme : DefaultTheme}
+    >
+      <Stack>
         <Stack.Screen name="(auth)" options={{ headerShown: false }} />
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="modal" options={{ presentation: "modal" }} />

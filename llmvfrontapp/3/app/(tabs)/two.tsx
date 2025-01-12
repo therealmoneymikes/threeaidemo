@@ -11,6 +11,9 @@ import { Tram } from "@/components/3d/Tram";
 import Starlink from "@/components/3d/Starlink";
 import useControls from "r3f-native-orbitcontrols";
 import { ChineseShop } from "@/components/3d/ChineseShop";
+import CustomPressable from "@/components/basecomponents/CustomPressable";
+import { router } from "expo-router";
+import colours from "@/config/colours";
 
 export default function TabTwoScreen() {
   const [OrbitControls, event] = useControls();
@@ -31,9 +34,15 @@ export default function TabTwoScreen() {
           {/* <Starlink /> */}
           {/* <Tram /> */}
           {/* <ChineseShop /> */}
-          <Cappa/>
+          <Cappa />
         </Canvas>
       </View>
+      <CustomPressable
+        style={{ backgroundColor: colours.primary, bottom: "10%", alignSelf: "center" }}
+        onPress={() => router.push("/(auth)/(signin)/SignInScreen")}
+      >
+        <Text>Get Started</Text>
+      </CustomPressable>
     </SafeAreaView>
   );
 }

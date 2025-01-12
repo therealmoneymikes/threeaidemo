@@ -6,7 +6,7 @@ import { Text, View } from "@/components/Themed";
 export default function TabOneScreen() {
   return (
     <View style={styles.container}>
-      <Text className="">Tailwind Test</Text>
+      <Text className="text-xl">Tailwind Test</Text>
     </View>
   );
 }
