@@ -8,8 +8,11 @@ from dotenv import load_dotenv
 load_dotenv()
 from agent_utils import main_system_prompt, get_agent_response, main_shop_agent_prompt
 
+#Constants
+PRODUCT_CATEGORY_LIMIT = 2
 class RecommendationAgent():
     def __init__(self, apriori_rec_path, popular_rec_path):
+        
         self.client = OpenAI(
             api_key=os.getenv("RUNPOD_TOKEN"), #Run Pod API Token
             base_url=os.getenv("RUNPOD_CHATBOT_URL"), #Chat Bot URL
@@ -18,9 +21,14 @@ class RecommendationAgent():
         self.model_name = os.getenv("MODEL_NAME")
         
         #Extract Apriori path (Contains lift, confidence, etc...)
-        with open(apriori_rec_path, "r") as file:
-            self.apriori_recommendations = json.load(file)
-            
+        
+        try: 
+            with open(apriori_rec_path, "r") as file:
+                self.apriori_recommendations = json.load(file)
+        except FileNotFoundError:
+            raise FileNotFoundError(f"Apriori recommendatios file not found: {apriori_rec_path}")
+        except json.JSONDecodeError:
+            raise ValueError(f"Error decoding JSON in file: {apriori_rec_path}") 
         #popular recommendations
         self.popular_recommendations = pd.read_csv(popular_rec_path) #Read CSV results
         #Extracting all products in recommendations into a list
@@ -31,7 +39,22 @@ class RecommendationAgent():
     
   
     #Recommendation Classifications
-    def get_apriori_recommendations(self, products, top_k=5):
+    def get_apriori_recommendations(self, products: list, top_k: int =5) -> list:
+        
+        """
+        Get recommendations based on Apriori algorithm results.
+
+        Args:
+            products (list): List of product names.
+            top_k (int): Maximum number of recommendations to return.
+
+        Returns:
+            list: List of recommended product names.
+        """
+        ...
+
+        
+         
         recommendation_list = [] ##Initialised an empty list to store recommendations
         #loop of the array of products from the popular recommendations
         for product in products:
@@ -59,7 +82,7 @@ class RecommendationAgent():
             if product_category not in recommendations_by_category:
                 recommendations_by_category[product_category] = 0
                 
-            if recommendations_by_category[product_category] >= 2: #Limit to 2 per category
+            if recommendations_by_category[product_category] >= PRODUCT_CATEGORY_LIMIT: #Limit to 2 per category
                 continue
             
             #Add the two cateogries to i.e 0, then 1 which is two products
@@ -72,7 +95,7 @@ class RecommendationAgent():
             
         return recommendations
     
-    def get_popular_recommendations(self, product_categories=None, top_k=5):
+    def get_popular_recommendations(self, product_categories: list | None=None, top_k:int=5):
         recommendations_dataframe = self.popular_recommendations ## Popular Recommendations dataframe
         
         ##Make sure its a string
@@ -115,19 +138,24 @@ class RecommendationAgent():
             "memory": {"agent": "recommendation_agent"} # memory of recommendation agent data
         }
 
+    #Message Structure Helper
+    def construct_input_messages(self, messages, system_prompt):
+        return [{"role": "system", "content": system_prompt}] + messages[-3:]
+    
     #generate the recommendation classifications
     def agent_recommendation_classification(self, messages):
         #Main System prompt from utils
         system_prompt = main_system_prompt(self.products, self.product_categories)
         
         #Get input messages from client
-        input_messages = [{"role": "system", "content": system_prompt}] + messages[-3:]
+        input_messages = self.construct_input_messages(messages, system_prompt)
         
         #Get Chatbot agents response
         chatbot_agent_output = get_agent_response(self.client,self.model_name,input_messages)
         output = self.generate_postprocess_classfication(chatbot_agent_output)
         return output
-   
+  
+    
    
     def get_response(self,messages):
         messages = deepcopy(messages)
@@ -162,7 +190,8 @@ class RecommendationAgent():
         """
 
         messages[-1]['content'] = prompt
-        input_messages = [{"role": "system", "content": system_prompt}] + messages[-3:]
+        #Get input messages from client
+        input_messages = self.construct_input_messages(messages, system_prompt)
 
         chatbot_output = get_agent_response(self.client,self.model_name,input_messages)
         output = self.generate_postprocess(chatbot_output)
@@ -186,7 +215,8 @@ class RecommendationAgent():
         """
 
         messages[-1]['content'] = prompt #set the most recent message in the list
-        input_messages = [{"role": "system", "content": system_prompt}] + messages[-3:]
+         #Get input messages from client
+        input_messages = self.construct_input_messages(messages, system_prompt)
 
         chatbot_output = get_agent_response(self.client,self.model_name,input_messages)
         output = self.generate_postprocess(chatbot_output)
