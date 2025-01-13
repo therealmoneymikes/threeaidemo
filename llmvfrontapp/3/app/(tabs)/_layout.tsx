@@ -3,7 +3,7 @@ import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { Link, Tabs } from "expo-router";
 import { Pressable } from "react-native";
 
-import Colors from "@/constants/Colors";
+import { Colors } from "@/config/colours";
 import { useColorScheme } from "@/components/useColorScheme";
 import { useClientOnlyValue } from "@/components/useClientOnlyValue";
 import colours from "@/config/colours";
@@ -38,9 +38,22 @@ export default function TabLayout() {
       }}
     >
       <Tabs.Screen
+        name="explore"
+        options={{
+          title: "Explore",
+          tabBarIcon: ({ focused }) => (
+            <TabBarIcon
+              name={focused ? "robot" : "robot-outline"}
+              color={focused ? colours.primary : colours.white}
+              size={30}
+            />
+          ),
+        }}
+      />
+      <Tabs.Screen
         name="index"
         options={{
-          title: "Index",
+          title: "Home",
           tabBarIcon: ({ focused }) => (
             <TabBarIcon
               name={focused ? "home" : "home-outline"}
@@ -65,19 +78,16 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="two"
+        name="chatbot"
         options={{
-          title: "Tab Two",
-          tabBarIcon: ({ color }) => (
-            <TabBarIcon name="robot-excited" color={color} />
+          title: "Chatbot",
+          tabBarIcon: ({ focused }) => (
+            <TabBarIcon
+              name={focused ? "robot" : "robot-outline"}
+              color={focused ? colours.primary : colours.white}
+              size={30}
+            />
           ),
-        }}
-      />
-      <Tabs.Screen
-        name="explore"
-        options={{
-          title: "Explore",
-          tabBarIcon: ({ color }) => <TabBarIcon name="cart" color={color} />,
         }}
       />
     </Tabs>

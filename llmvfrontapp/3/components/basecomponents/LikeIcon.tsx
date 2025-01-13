@@ -2,10 +2,10 @@ import React from "react";
 import { TouchableOpacity } from "react-native";
 import { FontAwesome, MaterialCommunityIcons } from "@expo/vector-icons";
 import { useDispatch, UseDispatch, useSelector } from "react-redux";
-import { addItemToFavourite, BasketItem  } from "@/app/statemangement/useBasketStore";
+import { addItemToFavourite } from "@/app/statemangement/BasketSlice";
 import { useSafeAreaFrame } from "react-native-safe-area-context";
 import { products } from "@/utils/data";
-import { RootState } from "@/app/statemangement/useBasketStore"
+import { RootState } from "@/app/statemangement/store";
 
 interface Props {
   itemId: number;

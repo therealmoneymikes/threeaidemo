@@ -11,10 +11,8 @@ import colours from "@/config/colours";
 import Animated from "react-native-reanimated";
 import { calculateX, calculateY } from "@/utils/screensizing";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  addItemToFavourite,
-  RootState,
-} from "@/app/statemangement/useBasketStore";
+import { addItemToFavourite, } from "@/app/statemangement/BasketSlice";
+import { RootState } from "@/app/statemangement/store";
 import LikeIcon from "./LikeIcon";
 const { width, height } = Dimensions.get("screen");
 
