@@ -22,6 +22,7 @@ import Animated, {
   FadeInLeft,
 } from "react-native-reanimated";
 import ContentSlideShow from "@/components/basecomponents/ContentSlideShow";
+import CategoryItem from "@/components/basecomponents/CategoryItem";
 const gIconSize = 18;
 const data = [
   { id: 1, category: "By Revelant" },

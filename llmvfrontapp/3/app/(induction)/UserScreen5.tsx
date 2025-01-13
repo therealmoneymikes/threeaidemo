@@ -4,11 +4,16 @@ import BaseScreen from "@/components/basecomponents/BaseScreen";
 import CustomPressable from "@/components/basecomponents/CustomPressable";
 import colours from "@/config/colours";
 import { calculateY } from "@/utils/screensizing";
-import { Video, ResizeMode } from "expo-av";
+import {useVideoPlayer, VideoView} from "expo-video"
 import { router } from "expo-router";
 import { FadeIn, FadeInUp } from "react-native-reanimated";
 import Animated from "react-native-reanimated";
 const UsersAgeIntermidate = () => {
+  const videoSource = require("@/assets/videos/cafeset.mp4");
+  const player = useVideoPlayer(videoSource, player => {
+    player.loop = true;
+    player.play()
+  })
   return (
     <BaseScreen
       animateBackground
@@ -82,8 +87,8 @@ const UsersAgeIntermidate = () => {
       </Animated.View>
 
       {/* Video */}
-      <Video
-        source={require("@/assets/videos/ecomcoder.mov")}
+      <VideoView
+        player={player}
         style={{
           width: "100%",
           height: "100%",
@@ -91,10 +96,8 @@ const UsersAgeIntermidate = () => {
           flex: 2,
           //   opacity: 1,
         }}
-        resizeMode={ResizeMode.COVER}
-        isLooping
-        // onPlaybackStatusUpdate={(status) => console.log(status)}
-        useNativeControls={false}
+        allowsFullscreen
+        allowsPictureInPicture={false}
       />
       <Animated.View
         entering={FadeInUp.delay(2200)
