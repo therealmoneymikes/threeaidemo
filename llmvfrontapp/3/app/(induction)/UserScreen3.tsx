@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View } from "react-native";
 import React, { useEffect, useRef, useState } from "react";
-import { ResizeMode, Video } from "expo-av";
+import { useVideoPlayer, VideoView } from "expo-video";
 import BaseScreen from "@/components/basecomponents/BaseScreen";
 import CustomPressable from "@/components/basecomponents/CustomPressable";
 import colours from "@/config/colours";
@@ -20,7 +20,11 @@ const colourTest = "hsl(301, 69%, 27%)";
 //endRangeColour={colours.maroon}
 
 const UserCareerIntermidateBenefit = () => {
-  const videoRef = useRef<Video>(null);
+  const videoSource = require("@/assets/videos/cafeset.mp4");
+  const player = useVideoPlayer(videoSource, (player) => {
+    player.loop = true;
+    player.play();
+  });
 
   const handleNextScreen = () => {
     console.log("move to screen 4");
@@ -66,9 +70,8 @@ const UserCareerIntermidateBenefit = () => {
         </Animated.Text>
       </Animated.View>
       {/* Video */}
-      <Video
-        ref={videoRef}
-        source={require("@/assets/videos/coffee1.mp4")}
+      <VideoView
+        player={player}
         style={{
           width: "100%",
           height: "100%",
@@ -76,10 +79,7 @@ const UserCareerIntermidateBenefit = () => {
           flex: 2,
           //   opacity: 1,
         }}
-        resizeMode={ResizeMode.COVER}
-        isLooping
-        // onPlaybackStatusUpdate={(status) => console.log(status)}
-        useNativeControls={false}
+        allowsFullscreen
       />
       <Animated.View
         entering={FadeInUp.delay(3000)
