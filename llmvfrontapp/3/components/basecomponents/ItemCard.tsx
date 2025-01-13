@@ -10,7 +10,11 @@ import { radius, spacingX, spacingY } from "@/config/spacings";
 import colours from "@/config/colours";
 import Animated from "react-native-reanimated";
 import { calculateX, calculateY } from "@/utils/screensizing";
-import { useBasketStore } from "@/state-management/zustand/useBasketStore";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  addItemToFavourite,
+  RootState,
+} from "@/app/statemangement/useBasketStore";
 import LikeIcon from "./LikeIcon";
 const { width, height } = Dimensions.get("screen");
 
@@ -25,8 +29,13 @@ interface Props {
   item: Item;
 }
 const ItemCard = ({ item }: Props) => {
+  const [isLiked, setIsLiked] = useState<boolean>(false);
   const router = useRouter();
   const itemPath = useLocalSearchParams();
+
+  const dispatch = useDispatch(); //Get Dispatchers from the shopping basket store
+  const items = useSelector((state: RootState) => state.basket.items);
+
   const handleItemSelection = () => {
     // Pass in data via params object
     //Raw path name ProductDetails
@@ -46,10 +55,6 @@ const ItemCard = ({ item }: Props) => {
       isLiked: itemPath.isLiked as boolean,
     });
   };
-
-  const [isLiked, setIsLiked] = useState<boolean>(false);
-  const { favouriteItems, addItemToFavourite, removeItemToFavourite } =
-    useBasketStore();
 
   return (
     <Pressable style={styles.container} onPress={handleItemSelection}>
