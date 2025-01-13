@@ -23,6 +23,8 @@ import Animated, {
 } from "react-native-reanimated";
 import ContentSlideShow from "@/components/basecomponents/ContentSlideShow";
 import CategoryItem from "@/components/basecomponents/CategoryItem";
+import ItemCard from "@/components/basecomponents/ItemCard";
+import SearchBarInput from "@/components/basecomponents/SearchBarInput";
 const gIconSize = 18;
 const data = [
   { id: 1, category: "By Revelant" },
@@ -89,6 +91,16 @@ export default function Explore() {
       {/* Header */}
       <View style={styles.header}>
         {/* Grid Button*/}
+        <CustomPressable
+          style={{
+            backgroundColor: "transparent",
+            borderRadius: radius._20,
+            padding: spacingY._7,
+          }}
+          onPress={() => console.log("Go to profile page")}
+        >
+          <Ionicons name="grid" color="white" size={26} />
+        </CustomPressable>
 
         {/* Basket Button */}
         <View
@@ -100,7 +112,6 @@ export default function Explore() {
             width: 100,
           }}
         >
-          {/*  To ShoppingCart*/}
           <CustomPressable
             style={[
               {
@@ -110,7 +121,7 @@ export default function Explore() {
               },
               { position: "relative" },
             ]}
-            onPress={() => router.navigate("/(screens)/ShoppingCartScreen")}
+            onPress={() => router.navigate("/(screens)/ShoppingCart")}
           >
             {items.length > 0 && (
               <View
@@ -135,7 +146,7 @@ export default function Explore() {
             )}
             <MaterialIcons name="shopping-cart" color="white" size={26} />
           </CustomPressable>
-          {/* To Favorites  */}
+
           <CustomPressable
             style={[
               {
@@ -145,7 +156,7 @@ export default function Explore() {
               },
               { marginLeft: 6, position: "relative" },
             ]}
-            onPress={() => router.push("/(screens)/FavoriteScreen")}
+            onPress={() => router.push("/(screens)/FavouriteScreen")}
           >
             <MaterialCommunityIcons
               name={"heart-outline"}
@@ -171,13 +182,20 @@ export default function Explore() {
       </View>
 
       {/* Search Bar */}
+      <SearchBarInput
+        filter={useFilter}
+        onPress={() => {
+          setUserFilter(!useFilter);
+          setFilterModalVisible(!filterModalVisible);
+        }}
+      />
 
       {/* Main Window */}
       <ScrollView
         contentContainerStyle={{ paddingBottom: spacingY._60 }}
         showsVerticalScrollIndicator={false}
       >
-        {/*  Image Content Slide Show*/}
+        {/*  Image Content Slide Show */}
         <Animated.View
           entering={FadeIn.delay(10).damping(12).springify().dampingRatio(0.5)}
         >
@@ -242,7 +260,11 @@ export default function Explore() {
                     .duration(600)
                     .damping(12)
                     .springify()}
-                ></Animated.View>
+                >
+                  <Pressable onPress={() => setItemData(item)}>
+                    <ItemCard item={item} />
+                  </Pressable>
+                </Animated.View>
               );
             }}
           />
