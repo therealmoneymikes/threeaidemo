@@ -86,6 +86,31 @@ const exportSliderImages = [
       image: require("../assets/images/categories/cookies.jpg"),
     },
   },
-  { body: { image: require("../assets/images/categories/cookies.jpg") } },
+  { body: { image: require("../assets/images/categories/coffeecup.jpg") } },
   { body: { image: require("../assets/images/categories/team.png") } },
 ];
+
+const categories = [
+  {
+    image: require("../assets/images/categories/coffeewithteam.jpg"),
+    name: "All",
+  },
+  {
+    image: require("../assets/images/categories/coffeecup.jpg"),
+    name: "Hot Drinks",
+  },
+  {
+    image: require("../assets/images/categories/coffeewithteam.jpg"),
+    name: "Cold Drinks",
+  },
+  {
+    image: require("../assets/images/categories/reactnativecolor.png"),
+    name: "Bakery",
+  },
+  {
+    image: require("../assets/images/categories/coffeewithteam.jpg"),
+    name: "Syrups and Condiments",
+  },
+];
+
+export { exportSliderImages, products, categories };

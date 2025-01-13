@@ -1,15 +1,9 @@
 import BaseScreen from "@/components/basecomponents/BaseScreen";
 import BaseText from "@/components/basecomponents/BaseText";
 import CustomPressable from "@/components/basecomponents/CustomPressable";
-import ItemCard from "@/components/basecomponents/ItemCard";
-import CategoryItem from "@/components/CategoryItem";
-import ContentSlideShow from "@/components/ContentSlideShow";
-import SearchBarInput from "@/components/navigation/SearchBarInput";
+import { categories, products, exportSliderImages } from "@/utils/data";
 import colours from "@/config/colours";
 import { radius, spacingX, spacingY } from "@/config/spacings";
-import FilterModal from "@/modals/FilterModal";
-import { useBasketStore } from "@/state-management/zustand/useBasketStore";
-import { categories, products, exportSliderImages } from "@/utils/data";
 import { MaterialIcons } from "@expo/vector-icons";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
@@ -50,7 +44,8 @@ export default function Explore() {
   const [contentKey, setContentKey] = useState<number>(0);
   const [filterModalVisible, setFilterModalVisible] = useState<boolean>(false);
   const router = useRouter();
-  const { items, favouriteItems, addItemToFavourite } = useBasketStore();
+  const items = [];
+  // ITEMS for favorites
 
   const selectFilter = (index: number) => {
     setFilterIndex(index);
@@ -71,17 +66,7 @@ export default function Explore() {
       }
     }, 20);
   };
-  const handleAddFavoriteItem = () => {
-    addItemToFavourite({
-      id: Number(itemPath.url),
-      name: String(itemPath.name),
-      price: Number(itemPath.price),
-      category: String(itemPath.category),
-      url: Number(itemPath.url),
-      quantity: 0,
-      isLiked: Boolean(itemPath.isLiked),
-    });
-  };
+
   // gradientColours={["hsl(27 93% 66%)", "hsl(0 93% 86%)"]}
   //gradientColours={["#0f0f0f", "#1a1a1a"]}
   //hsl(225 93% 54%)
@@ -91,7 +76,7 @@ export default function Explore() {
   //Beige - #e7b379
   //CSA Black - #171c1a
 
-  useEffect(() => {}, []);
+
   return (
     <BaseScreen
       gradient
@@ -111,16 +96,6 @@ export default function Explore() {
       {/* Header */}
       <View style={styles.header}>
         {/* Grid Button*/}
-        <CustomPressable
-          style={{
-            backgroundColor: "transparent",
-            borderRadius: radius._20,
-            padding: spacingY._7,
-          }}
-          onPress={() => router.navigate("/profile")}
-        >
-          <Ionicons name="grid" color="white" size={26} />
-        </CustomPressable>
 
         {/* Basket Button */}
         <View
@@ -132,6 +107,7 @@ export default function Explore() {
             width: 100,
           }}
         >
+          {/*  To ShoppingCart*/}
           <CustomPressable
             style={[
               {
@@ -166,7 +142,7 @@ export default function Explore() {
             )}
             <MaterialIcons name="shopping-cart" color="white" size={26} />
           </CustomPressable>
-
+          {/* To Favorites  */}
           <CustomPressable
             style={[
               {
@@ -203,14 +179,6 @@ export default function Explore() {
 
       {/* Search Bar */}
 
-      <SearchBarInput
-        filter={useFilter}
-        onPress={() => {
-          setUserFilter(!useFilter);
-          setFilterModalVisible(!filterModalVisible);
-        }}
-      />
-
       {/* Main Window */}
       <ScrollView
         contentContainerStyle={{ paddingBottom: spacingY._60 }}
@@ -219,31 +187,7 @@ export default function Explore() {
         {/*  Image Content Slide Show*/}
         <Animated.View
           entering={FadeIn.delay(10).damping(12).springify().dampingRatio(0.5)}
-        >
-          <ContentSlideShow sliderArray={exportSliderImages} />
-        </Animated.View>
-
-        {/* Categories Section */}
-        <FlatList
-          data={categories}
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={styles.categoriesContainer}
-          keyExtractor={(_, index) => index.toString()}
-          renderItem={({ item, index }) => {
-            const isSelected = selected === item.name;
-            return (
-              <CategoryItem
-                key={index}
-                keyValue={contentKey}
-                isSelected={isSelected}
-                item={item}
-                index={index}
-                onPress={handleCategoryFilter}
-              />
-            );
-          }}
-        />
+        ></Animated.View>
 
         <Animated.View
           entering={FadeInLeft.delay(10)
@@ -282,20 +226,13 @@ export default function Explore() {
                     .duration(600)
                     .damping(12)
                     .springify()}
-                >
-                  <Pressable onPress={() => setItemData(item)}>
-                    <ItemCard item={item} />
-                  </Pressable>
-                </Animated.View>
+                ></Animated.View>
               );
             }}
           />
         )}
       </ScrollView>
-      <FilterModal
-        visible={filterModalVisible}
-        setVisible={setFilterModalVisible}
-      />
+
       {/* </BaseScreen> */}
     </BaseScreen>
   );
