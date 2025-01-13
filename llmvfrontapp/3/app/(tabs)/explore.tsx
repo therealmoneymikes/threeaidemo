@@ -21,6 +21,7 @@ import Animated, {
   FadeInDown,
   FadeInLeft,
 } from "react-native-reanimated";
+import ContentSlideShow from "@/components/basecomponents/ContentSlideShow";
 const gIconSize = 18;
 const data = [
   { id: 1, category: "By Revelant" },
@@ -180,9 +181,30 @@ export default function Explore() {
         <Animated.View
           entering={FadeIn.delay(10).damping(12).springify().dampingRatio(0.5)}
         >
-          
+          <ContentSlideShow sliderArray={exportSliderImages} />
         </Animated.View>
 
+        {/* Categories Section */}
+        <FlatList
+          data={categories}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={styles.categoriesContainer}
+          keyExtractor={(_, index) => index.toString()}
+          renderItem={({ item, index }) => {
+            const isSelected = selected === item.name;
+            return (
+              <CategoryItem
+                key={index}
+                keyValue={contentKey}
+                isSelected={isSelected}
+                item={item}
+                index={index}
+                onPress={handleCategoryFilter}
+              />
+            );
+          }}
+        />
         <Animated.View
           entering={FadeInLeft.delay(10)
             .springify()

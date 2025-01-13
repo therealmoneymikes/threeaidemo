@@ -1,3 +1,5 @@
+import { ISliderObjectArrayProps } from "@/components/basecomponents/ContentSlideShow";
+
 const products = [
   {
     id: 1,
@@ -88,8 +90,7 @@ const exportSliderImages = [
   },
   { body: { image: require("../assets/images/categories/coffeecup.jpg") } },
   { body: { image: require("../assets/images/categories/team.png") } },
-];
-
+] satisfies ISliderObjectArrayProps["sliderArray"]
 const categories = [
   {
     image: require("../assets/images/categories/coffeewithteam.jpg"),
