@@ -84,14 +84,6 @@ export default function Explore() {
       endRangeColour={colours.maroon}
       animateBackground
       animationSpeed={4500}
-
-      // gradient
-      // animateBackground
-      // animationSpeed={3000}
-      // startRangeColour="hsl(27 93% 66%)"
-      // endRangeColour="hsl(301 70% 66%)"
-      // endRangeColour="#171c1a"
-      // gradientColours={["#171c1a", "hsl(2 46% 70%)"]}
     >
       {/* Header */}
       <View style={styles.header}>
@@ -187,7 +179,9 @@ export default function Explore() {
         {/*  Image Content Slide Show*/}
         <Animated.View
           entering={FadeIn.delay(10).damping(12).springify().dampingRatio(0.5)}
-        ></Animated.View>
+        >
+          
+        </Animated.View>
 
         <Animated.View
           entering={FadeInLeft.delay(10)
