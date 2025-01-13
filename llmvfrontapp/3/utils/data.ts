@@ -89,7 +89,7 @@ const exportSliderImages = [
     },
   },
   { body: { image: require("../assets/images/categories/coffeecup.jpg") } },
-  { body: { image: require("../assets/images/categories/team.png") } },
+  { body: { image: require("../assets/images/categories/team.jpg") } },
 ] satisfies ISliderObjectArrayProps["sliderArray"]
 const categories = [
   {
@@ -105,7 +105,7 @@ const categories = [
     name: "Cold Drinks",
   },
   {
-    image: require("../assets/images/categories/reactnativecolor.png"),
+    image: require("../assets/images/products/croissant.jpg"),
     name: "Bakery",
   },
   {

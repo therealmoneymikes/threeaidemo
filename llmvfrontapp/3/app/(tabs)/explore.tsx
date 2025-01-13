@@ -78,7 +78,6 @@ export default function Explore() {
   //Beige - #e7b379
   //CSA Black - #171c1a
 
-
   return (
     <BaseScreen
       gradient
@@ -111,7 +110,7 @@ export default function Explore() {
               },
               { position: "relative" },
             ]}
-            onPress={() => router.navigate("/(screens)/ShoppingCart")}
+            onPress={() => router.navigate("/(screens)/ShoppingCartScreen")}
           >
             {items.length > 0 && (
               <View
@@ -146,7 +145,7 @@ export default function Explore() {
               },
               { marginLeft: 6, position: "relative" },
             ]}
-            onPress={() => router.push("/(screens)/FavouriteScreen")}
+            onPress={() => router.push("/(screens)/FavoriteScreen")}
           >
             <MaterialCommunityIcons
               name={"heart-outline"}
