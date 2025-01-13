@@ -44,7 +44,7 @@ import BaseButton from "@/components/basecomponents/BaseButton";
 import ProductDetailsSelector from "@/components/basecomponents/ProductDetailsSelector";
 import LikeIcon from "@/components/basecomponents/LikeIcon";
 import { useDispatch, useSelector } from "react-redux";
-import { addItemToFavourite, addItem } from "../statemangement/useBasketStore";
+import { addItemToFavourite, addItem } from "../statemangement/BasketSlice";
 addItemToFavourite;
 
 const { height: SCREEN_HEIGHT } = Dimensions.get("screen");
@@ -178,7 +178,7 @@ const ProductDetails = () => {
           />
         </Animated.View>
       )}
-      
+
       <Animated.View style={styles.header}>
         {/* Go Back */}
         <CustomPressable

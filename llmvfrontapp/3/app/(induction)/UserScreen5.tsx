@@ -4,16 +4,29 @@ import BaseScreen from "@/components/basecomponents/BaseScreen";
 import CustomPressable from "@/components/basecomponents/CustomPressable";
 import colours from "@/config/colours";
 import { calculateY } from "@/utils/screensizing";
-import {useVideoPlayer, VideoView} from "expo-video"
+import { useVideoPlayer, VideoView } from "expo-video";
 import { router } from "expo-router";
 import { FadeIn, FadeInUp } from "react-native-reanimated";
 import Animated from "react-native-reanimated";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../statemangement/store";
+import { incrementProgress } from "../statemangement/signupProgressSlice";
 const UsersAgeIntermidate = () => {
   const videoSource = require("@/assets/videos/cafeset.mp4");
-  const player = useVideoPlayer(videoSource, player => {
+  const player = useVideoPlayer(videoSource, (player) => {
     player.loop = true;
-    player.play()
-  })
+    player.play();
+  });
+
+  const progress = useSelector(
+    (state: RootState) => state.signupProgress.progress
+  );
+  //Get dispatch function
+  const dispatch = useDispatch();
+  const handleNextScreen = () => {
+    dispatch(incrementProgress(20));
+    router.push("/(tabs)/explore");
+  };
   return (
     <BaseScreen
       animateBackground

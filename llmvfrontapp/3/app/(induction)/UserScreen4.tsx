@@ -4,15 +4,27 @@ import BaseScreen from "@/components/basecomponents/BaseScreen";
 import CustomPressable from "@/components/basecomponents/CustomPressable";
 import colours from "@/config/colours";
 import { spacingY } from "@/config/spacings";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../statemangement/store";
+import { incrementProgress } from "../statemangement/signupProgressSlice";
+import { router } from "expo-router";
 
 
 
 const ageRanges = ["18 or under", "19-24", "25-34", "35-44", "45-over"];
 
 const UsersAge = () => {
-     const handleNextScreen = () => {
-       console.log("move to screen 5");
-     };
+  
+
+      const progress = useSelector(
+        (state: RootState) => state.signupProgress.progress
+      );
+      //Get dispatch function
+      const dispatch = useDispatch();
+      const handleNextScreen = () => {
+        dispatch(incrementProgress(20));
+        router.push("/(induction)/UserScreen5");
+      };
 
   return (
     <BaseScreen animateBackground gradient>

@@ -18,4 +18,4 @@ const InductionLayout = () => {
   );
 };
 
-export default InductionLayout
+export default InductionLayout;

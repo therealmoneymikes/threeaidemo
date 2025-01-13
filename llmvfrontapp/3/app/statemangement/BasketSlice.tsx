@@ -1,10 +1,10 @@
-import { createSlice, configureStore, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 // Basket Item Shape
 export type BasketItem = {
   id: number;
   category: string;
-  url: number; //Node Require statements resolve to a number
+  url: number; // Node Require statements resolve to a number
   name: string;
   price: number;
   quantity: number;
@@ -29,16 +29,16 @@ const basketSlice = createSlice({
   reducers: {
     // Add Item Reducer
     addItem: (state, action: PayloadAction<BasketItem>) => {
-      const item = action.payload; //Item
+      const item = action.payload; // Item
       const existingItem = state.items.find((i) => i.id === item.id);
       if (existingItem) {
-        existingItem.quantity += item.quantity; //Add items to the basket
+        existingItem.quantity += item.quantity; // Add items to the basket
       } else {
         state.items.push(item);
       }
     },
 
-    //Add Item to Favorite Reducer
+    // Add Item to Favorite Reducer
     addItemToFavourite: (state, action: PayloadAction<BasketItem>) => {
       const item = action.payload;
       const existingItem = state.favouriteItems.find((i) => i.id === item.id);
@@ -66,11 +66,12 @@ const basketSlice = createSlice({
       state.items = [];
     },
 
+    // Update Like Status Reducer
     updateLikeStatus: (state, action: PayloadAction<number>) => {
       const id = action.payload;
       // Update item itself outside of the favorite basket
-      state.items = state.items.map(
-        (item) => (item.id === id ? { ...item, isLiked: !item.isLiked } : item) //Update isLiked var
+      state.items = state.items.map((item) =>
+        item.id === id ? { ...item, isLiked: !item.isLiked } : item
       );
       // Update item itself inside of the favorite basket
       state.favouriteItems = state.favouriteItems.map((item) =>
@@ -80,7 +81,6 @@ const basketSlice = createSlice({
   },
 });
 
-// Export basket store actions
 export const {
   addItem,
   addItemToFavourite,
@@ -90,13 +90,4 @@ export const {
   updateLikeStatus,
 } = basketSlice.actions;
 
-const store = configureStore({
-  reducer: {
-    basket: basketSlice.reducer,
-  },
-});
-
-export type RootState = ReturnType<typeof store.getState>;
-export type AppDispatch = typeof store.dispatch;
-
-export default store;
+export default basketSlice.reducer;

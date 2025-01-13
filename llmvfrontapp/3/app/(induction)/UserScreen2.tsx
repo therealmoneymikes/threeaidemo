@@ -15,6 +15,10 @@ import {
   MaterialCommunityIcons,
   MaterialIcons,
 } from "@expo/vector-icons";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../statemangement/store";
+import { incrementProgress } from "../statemangement/signupProgressSlice";
+import ProgressBar from "@/components/basecomponents/ProgressBar";
 
 const headerText =
   "With 3AI you can grab a coffee ANYTIME, ANYWHERE, on ANY device.";
@@ -107,8 +111,21 @@ const areaOptions = [
 ];
 
 const UsersScreen2 = () => {
+  //Get Progress Value from Redux Store
+  //useSelector get a piece of state from redux
+  const progress = useSelector(
+    (state: RootState) => state.signupProgress.progress
+  );
+  //Get dispatch function
+  const dispatch = useDispatch();
+  const handleNextScreen = () => {
+    dispatch(incrementProgress(20));
+    router.push("/(induction)/UserScreen3");
+  };
+
   return (
     <BaseScreen animateBackground gradient>
+      <ProgressBar progress={progress} />
       <Animated.View
         entering={FadeInRight.delay(200).damping(12).dampingRatio(2)}
         style={{ width: "90%", paddingTop: spacingY._40, alignSelf: "center" }}

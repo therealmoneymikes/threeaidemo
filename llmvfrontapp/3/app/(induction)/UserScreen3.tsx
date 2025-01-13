@@ -11,6 +11,11 @@ import Animated, {
 } from "react-native-reanimated";
 import { spacingY } from "@/config/spacings";
 import { calculateY } from "@/utils/screensizing";
+import ProgressBar from "@/components/basecomponents/ProgressBar";
+import { RootState } from "../statemangement/store";
+import { useDispatch, useSelector } from "react-redux";
+import { incrementProgress } from "../statemangement/signupProgressSlice";
+import { router } from "expo-router";
 
 const headerText =
   "At the 3AI enjoy award drinks and treats FAST and AFFORDABLY!";
@@ -26,8 +31,14 @@ const UserCareerIntermidateBenefit = () => {
     player.play();
   });
 
+ const progress = useSelector(
+    (state: RootState) => state.signupProgress.progress
+  );
+  //Get dispatch function
+  const dispatch = useDispatch();
   const handleNextScreen = () => {
-    console.log("move to screen 4");
+    dispatch(incrementProgress(20));
+    router.push("/(induction)/UserScreen4");
   };
 
   return (
@@ -37,6 +48,7 @@ const UserCareerIntermidateBenefit = () => {
       startRangeColour={colours.primary}
       endRangeColour={colours.maroon}
     >
+      <ProgressBar progress={progress} />
       <Animated.View
         entering={FadeIn.delay(200).damping(12).dampingRatio(2)}
         style={{

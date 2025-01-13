@@ -7,7 +7,15 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { spacingY } from "@/config/spacings";
 import CustomPressable from "@/components/basecomponents/CustomPressable";
 import { router, useSegments } from "expo-router";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  incrementProgress,
+  decrementProgress,
+  resetProgress
+} from "../statemangement/signupProgressSlice";
+import { RootState } from "../statemangement/store";
 
+import ProgressBar from "@/components/basecomponents/ProgressBar";
 const UsersCareerOptions = [
   {
     title: "I'm an entrepreneur",
@@ -27,12 +35,19 @@ const UsersCareerOptions = [
   },
 ];
 const UsersScreen1 = () => {
+  //Get Progress Value from Redux Store
+  //useSelector get a piece of state from redux
+  const progress = useSelector((state: RootState) => state.signupProgress.progress);
+  //Get dispatch function
+  const dispatch = useDispatch();
   const handleNextScreen = () => {
-    console.log("Move to screen 2");
+    dispatch(incrementProgress(20));
+    router.push("/(induction)/UserScreen2");
   };
 
   return (
     <BaseScreen animateBackground gradient>
+      <ProgressBar progress={progress} />
       <View
         style={{
           alignSelf: "center",

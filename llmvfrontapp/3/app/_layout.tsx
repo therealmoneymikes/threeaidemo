@@ -12,6 +12,8 @@ import "react-native-reanimated";
 import { Slot } from "expo-router";
 import "../global.css";
 import { useColorScheme } from "@/components/useColorScheme";
+import { Provider } from "react-redux";
+import { store } from "./statemangement/store";
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -54,15 +56,18 @@ function RootLayoutNav() {
   const colorScheme = useColorScheme();
   //Theme Provider Error colorScheme?.trim()
   return (
-    <ThemeProvider
-      value={colorScheme?.trim() === "dark" ? DarkTheme : DefaultTheme}
-    >
-      <Stack>
-        <Stack.Screen name="(induction)" options={{ headerShown: false }} />
-        <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="modal" options={{ presentation: "modal" }} />
-      </Stack>
-    </ThemeProvider>
+    <Provider store={store}>
+      <ThemeProvider
+        value={colorScheme?.trim() === "dark" ? DarkTheme : DefaultTheme}
+      >
+        <Stack>
+          <Stack.Screen name="(induction)" options={{ headerShown: false }} />
+          <Stack.Screen name="(screens)" options={{ headerShown: false }} />
+          <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          <Stack.Screen name="modal" options={{ presentation: "modal" }} />
+        </Stack>
+      </ThemeProvider>
+    </Provider>
   );
 }
