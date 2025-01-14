@@ -6,23 +6,10 @@ import AppButton from "@/components/basecomponents/BaseButton";
 import { router } from "expo-router";
 import colours from "@/config/colours";
 import { spacingX, spacingY } from "@/config/spacings";
-import { useDispatch, UseDispatch, useSelector } from "react-redux";
-import {
-  incrementProgress,
-  decrementProgress,
-  resetProgress,
-} from "../statemangement/signupProgressSlice";
-import { RootState } from "../statemangement/store";
-import ProgressBar from "@/components/basecomponents/ProgressBar";
-const PreInductionScreen = () => {
-  const dispatch = useDispatch();
-  const progress = useSelector(
-    (state: RootState) => state.signupProgress.progress
-  );
 
+const PreInductionScreen = () => {
   const handleNextScreen = () => {
-    dispatch(incrementProgress(20));
-    router.push("/(induction)/UserScreen2");
+    router.push("/(induction)/UserScreen1");
   };
 
   return (
@@ -34,7 +21,6 @@ const PreInductionScreen = () => {
       animateBackground
       animationSpeed={4500}
     >
-      <ProgressBar progress={progress} />
       <Animated.View
         style={{
           flex: 1,

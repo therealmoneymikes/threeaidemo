@@ -62,7 +62,9 @@ const SignUpScreen = () => {
         )}
       </Animated.View>
       <Animated.View style={{ padding: spacingY._20 }}>
-        <CustomPressable onPress={() => router.navigate("/(auth)/(signin)/SignInScreen")}>
+        <CustomPressable
+          onPress={() => router.navigate("/(auth)/(signin)/SignInScreen")}
+        >
           <Text style={{ color: "white" }}>BACK</Text>
         </CustomPressable>
       </Animated.View>

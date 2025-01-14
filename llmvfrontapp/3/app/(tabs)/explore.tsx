@@ -83,8 +83,8 @@ export default function Explore() {
   return (
     <BaseScreen
       gradient
-      startRangeColour={colours.primary}
-      endRangeColour={colours.maroon}
+      startRangeColour={colours.csablack}
+      endRangeColour={colours.navy}
       animateBackground
       animationSpeed={4500}
     >
@@ -121,7 +121,7 @@ export default function Explore() {
               },
               { position: "relative" },
             ]}
-            onPress={() => router.navigate("/(screens)/ShoppingCartScreen")}
+            onPress={() => router.navigate("/(induction)/PreInductionScreen")}
           >
             {items.length > 0 && (
               <View

@@ -9,11 +9,11 @@ const InductionLayout = () => {
         name="PreInductionScreen"
         options={{ headerShown: false }}
       />
-      <Stack.Screen name="UsersScreen1" options={{ headerShown: false }} />
-      <Stack.Screen name="UsersScreen2" options={{ headerShown: false }} />
-      <Stack.Screen name="UsersScreen3" options={{ headerShown: false }} />
-      <Stack.Screen name="UsersScreen4" options={{ headerShown: false }} />
-      <Stack.Screen name="UsersScreen5" options={{ headerShown: false }} />
+      <Stack.Screen name="UserScreen1" options={{ headerShown: false }} />
+      <Stack.Screen name="UserScreen2" options={{ headerShown: false }} />
+      <Stack.Screen name="UserScreen3" options={{ headerShown: false }} />
+      <Stack.Screen name="UserScreen4" options={{ headerShown: false }} />
+      <Stack.Screen name="UserScreen5" options={{ headerShown: false }} />
     </Stack>
   );
 };

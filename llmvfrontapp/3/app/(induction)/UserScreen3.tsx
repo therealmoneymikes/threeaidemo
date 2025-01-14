@@ -14,24 +14,27 @@ import { calculateY } from "@/utils/screensizing";
 import ProgressBar from "@/components/basecomponents/ProgressBar";
 import { RootState } from "../statemangement/store";
 import { useDispatch, useSelector } from "react-redux";
-import { incrementProgress } from "../statemangement/signupProgressSlice";
+import {
+  incrementProgress,
+  resetProgress,
+} from "../statemangement/signupProgressSlice";
 import { router } from "expo-router";
 
 const headerText =
-  "At the 3AI enjoy award drinks and treats FAST and AFFORDABLY!";
+  "At the 3AI enjoy award winning drinks and treats FAST and AFFORDABLY!";
 
 const colourTest = "hsl(301, 69%, 27%)";
 //startRangeColour={colours.primary}
 //endRangeColour={colours.maroon}
 
-const UserCareerIntermidateBenefit = () => {
-  const videoSource = require("@/assets/videos/cafeset.mp4");
+const UserScreen3 = () => {
+  const videoSource = require("@/assets/videos/1.mov");
   const player = useVideoPlayer(videoSource, (player) => {
     player.loop = true;
     player.play();
   });
 
- const progress = useSelector(
+  const progress = useSelector(
     (state: RootState) => state.signupProgress.progress
   );
   //Get dispatch function
@@ -41,6 +44,12 @@ const UserCareerIntermidateBenefit = () => {
     router.push("/(induction)/UserScreen4");
   };
 
+  useEffect(() => {
+    if (progress !== 40) {
+      router.navigate("/(induction)/UserScreen1");
+      dispatch(resetProgress());
+    }
+  }, []);
   return (
     <BaseScreen
       animateBackground
@@ -50,12 +59,11 @@ const UserCareerIntermidateBenefit = () => {
     >
       <ProgressBar progress={progress} />
       <Animated.View
-        entering={FadeIn.delay(200).damping(12).dampingRatio(2)}
+        entering={FadeInUp.damping(12).dampingRatio(1).springify()}
         style={{
-          width: "94%",
-          paddingTop: calculateY(155),
+          width: "97%",
+          paddingTop: calculateY(120),
           alignSelf: "center",
-          alignItems: "center",
           zIndex: 10,
           position: "absolute",
           backgroundColor: "transparent",
@@ -64,9 +72,9 @@ const UserCareerIntermidateBenefit = () => {
         <Animated.Text
           style={{
             fontWeight: 200,
-            fontSize: 32,
+            fontSize: 52,
             textAlign: "center",
-            color: "white",
+            color: "hsl(201, 94%, 10%)",
             width: "100%",
             // fontFamily: "MuliRegular",
             //fontFamily:"LatoLight"
@@ -81,6 +89,7 @@ const UserCareerIntermidateBenefit = () => {
           {headerText}
         </Animated.Text>
       </Animated.View>
+
       {/* Video */}
       <VideoView
         player={player}
@@ -89,16 +98,16 @@ const UserCareerIntermidateBenefit = () => {
           height: "100%",
           backgroundColor: "transparent",
           flex: 2,
-          //   opacity: 1,
         }}
-        allowsFullscreen
+        nativeControls={false}
       />
+
       <Animated.View
-        entering={FadeInUp.delay(3000)
+        entering={FadeInUp.delay(2200)
           .damping(200)
           .springify()
           .dampingRatio(1.8)}
-        style={{ bottom: "15%" }}
+        style={{ alignSelf: "center", bottom: "15%" }}
       >
         <CustomPressable
           style={{
@@ -118,10 +127,12 @@ const UserCareerIntermidateBenefit = () => {
           <Text style={{ fontWeight: "bold", color: "white" }}>Next</Text>
         </CustomPressable>
       </Animated.View>
+
+      {/* Lets continue */}
     </BaseScreen>
   );
 };
 
-export default UserCareerIntermidateBenefit;
+export default UserScreen3;
 
 const styles = StyleSheet.create({});

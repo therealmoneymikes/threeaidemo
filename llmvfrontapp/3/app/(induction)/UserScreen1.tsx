@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   incrementProgress,
   decrementProgress,
-  resetProgress
+  resetProgress,
 } from "../statemangement/signupProgressSlice";
 import { RootState } from "../statemangement/store";
 
@@ -37,13 +37,21 @@ const UsersCareerOptions = [
 const UsersScreen1 = () => {
   //Get Progress Value from Redux Store
   //useSelector get a piece of state from redux
-  const progress = useSelector((state: RootState) => state.signupProgress.progress);
+  const progress = useSelector(
+    (state: RootState) => state.signupProgress.progress
+  );
   //Get dispatch function
   const dispatch = useDispatch();
   const handleNextScreen = () => {
     dispatch(incrementProgress(20));
     router.push("/(induction)/UserScreen2");
   };
+
+  useEffect(() => {
+    if (progress !== 0) {
+      dispatch(resetProgress());
+    }
+  }, []);
 
   return (
     <BaseScreen animateBackground gradient>

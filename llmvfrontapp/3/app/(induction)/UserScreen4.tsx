@@ -9,26 +9,21 @@ import { RootState } from "../statemangement/store";
 import { incrementProgress } from "../statemangement/signupProgressSlice";
 import { router } from "expo-router";
 
-
-
 const ageRanges = ["18 or under", "19-24", "25-34", "35-44", "45-over"];
 
 const UsersAge = () => {
-  
-
-      const progress = useSelector(
-        (state: RootState) => state.signupProgress.progress
-      );
-      //Get dispatch function
-      const dispatch = useDispatch();
-      const handleNextScreen = () => {
-        dispatch(incrementProgress(20));
-        router.push("/(induction)/UserScreen5");
-      };
+  const progress = useSelector(
+    (state: RootState) => state.signupProgress.progress
+  );
+  //Get dispatch function
+  const dispatch = useDispatch();
+  const handleNextScreen = () => {
+    dispatch(incrementProgress(20));
+    router.push("/(induction)/UserScreen5");
+  };
 
   return (
     <BaseScreen animateBackground gradient>
-  
       <View
         style={{
           alignSelf: "center",

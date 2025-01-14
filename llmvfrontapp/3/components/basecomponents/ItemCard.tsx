@@ -11,7 +11,7 @@ import colours from "@/config/colours";
 import Animated from "react-native-reanimated";
 import { calculateX, calculateY } from "@/utils/screensizing";
 import { useDispatch, useSelector } from "react-redux";
-import { addItemToFavourite, } from "@/app/statemangement/BasketSlice";
+import { addItemToFavourite } from "@/app/statemangement/BasketSlice";
 import { RootState } from "@/app/statemangement/store";
 import LikeIcon from "./LikeIcon";
 const { width, height } = Dimensions.get("screen");
@@ -78,7 +78,7 @@ const ItemCard = ({ item }: Props) => {
           {item.name}
         </BaseText>
         <BaseText size={12} style={{ fontWeight: "200", marginStart: 10 }}>
-          £{item.price}
+          £{item.price.toFixed(2)}
         </BaseText>
       </Animated.View>
     </Pressable>

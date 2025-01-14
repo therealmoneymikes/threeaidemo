@@ -31,6 +31,27 @@ SplashScreen.preventAutoHideAsync();
 export default function RootLayout() {
   const [loaded, error] = useFonts({
     SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
+    InterBlack: require("../assets/fonts/Inter-Black.otf"),
+    InterBlackItalic: require("../assets/fonts/Inter-BlackItalic.otf"),
+    InterBlackBold: require("../assets/fonts/Inter-Bold.otf"),
+    InterExtraLight: require("../assets/fonts/Inter-Light-BETA.otf"),
+    InterThin: require("../assets/fonts/Inter-Thin-BETA.otf"),
+    InterMedium: require("../assets/fonts/Inter-Medium.otf"),
+    InterSemi: require("../assets/fonts/Inter-SemiBold.otf"),
+    LatoLight: require("../assets/fonts/Lato-Light.ttf"),
+    LatoRegular: require("../assets/fonts/Lato-Regular.ttf"),
+    LatoThin: require("../assets/fonts/Lato-Thin.ttf"),
+    Nunito: require("../assets/fonts/Nunito.ttf"),
+    CabinSketchRegular: require("../assets/fonts/CabinSketch-Regular.ttf"),
+    CabinSketchBold: require("../assets/fonts/CabinSketch-Bold.ttf"),
+    CabinCondensedBold: require("../assets/fonts/CabinCondensed-Bold.ttf"),
+    CabinCondensedMedium: require("../assets/fonts/CabinCondensed-Medium.ttf"),
+    CabinCondensedRegular: require("../assets/fonts/CabinCondensed-Regular.ttf"),
+    CabinCondensedSemiBold: require("../assets/fonts/CabinCondensed-SemiBold.ttf"),
+    CabinMedium: require("../assets/fonts/Cabin-Medium.ttf"),
+    CabinRegular: require("../assets/fonts/Cabin-Regular.ttf"),
+    MuliLight: require("../assets/fonts/Muli-Light.ttf"),
+    MuliRegularMuliRegular: require("../assets/fonts/Muli-Regular.ttf"),
     ...FontAwesome.font,
   });
 

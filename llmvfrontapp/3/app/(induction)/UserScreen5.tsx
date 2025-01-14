@@ -11,6 +11,7 @@ import Animated from "react-native-reanimated";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../statemangement/store";
 import { incrementProgress } from "../statemangement/signupProgressSlice";
+import ProgressBar from "@/components/basecomponents/ProgressBar";
 const UsersAgeIntermidate = () => {
   const videoSource = require("@/assets/videos/cafeset.mp4");
   const player = useVideoPlayer(videoSource, (player) => {
@@ -34,6 +35,7 @@ const UsersAgeIntermidate = () => {
       startRangeColour={colours.primary}
       endRangeColour={colours.maroon}
     >
+      <ProgressBar progress={progress} />
       <Animated.View
         entering={FadeInUp.damping(12).dampingRatio(1).springify()}
         style={{
@@ -87,12 +89,12 @@ const UsersAgeIntermidate = () => {
             width: "100%",
             // fontFamily: "MuliRegular",
             //fontFamily:"LatoLight"
-            fontFamily: "CabinSketchRegular",
+            // fontFamily: "CabinSketchRegular",
             //fontFamily: "CabinSketchBold"
             //fontFamily: "CabinCondensedBold"
             //fontFamily: "CabinRegular"
             //fontFamily: "MuliLight"
-            //fontFamily: "MuliRegular"
+            fontFamily: "MuliRegular"
           }}
         >
           Amazing!

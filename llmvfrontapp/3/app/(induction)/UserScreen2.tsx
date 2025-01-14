@@ -15,13 +15,18 @@ import {
   MaterialCommunityIcons,
   MaterialIcons,
 } from "@expo/vector-icons";
+import colours from "@/config/colours";
+import CustomPressable from "@/components/basecomponents/CustomPressable";
 import { useDispatch, useSelector } from "react-redux";
+import {
+  incrementProgress,
+  resetProgress,
+} from "../statemangement/signupProgressSlice";
 import { RootState } from "../statemangement/store";
-import { incrementProgress } from "../statemangement/signupProgressSlice";
 import ProgressBar from "@/components/basecomponents/ProgressBar";
 
 const headerText =
-  "With 3AI you can grab a coffee ANYTIME, ANYWHERE, on ANY device.";
+  "At the 3AI enjoy award winning drinks and treats ANYTIME, ANYWHERE, on ANY device.";
 const gIconSize = 50;
 const areaOptions = [
   {
@@ -110,21 +115,29 @@ const areaOptions = [
   },
 ];
 
-const UsersScreen2 = () => {
-  //Get Progress Value from Redux Store
-  //useSelector get a piece of state from redux
+const UserScreen2 = () => {
+  
+
+  const dispatch = useDispatch();
   const progress = useSelector(
     (state: RootState) => state.signupProgress.progress
   );
-  //Get dispatch function
-  const dispatch = useDispatch();
   const handleNextScreen = () => {
-    dispatch(incrementProgress(20));
     router.push("/(induction)/UserScreen3");
+    dispatch(incrementProgress(20));
   };
 
+  useEffect(() => {
+    if (progress !== 20) {
+      router.navigate("/(induction)/UserScreen1");
+      dispatch(resetProgress());
+    }
+
+    setTimeout(handleNextScreen, 10000);
+  }, []);
   return (
     <BaseScreen animateBackground gradient>
+      {/* <Text>Option 1 {params.title}</Text> */}
       <ProgressBar progress={progress} />
       <Animated.View
         entering={FadeInRight.delay(200).damping(12).dampingRatio(2)}
@@ -199,6 +212,6 @@ const UsersScreen2 = () => {
   );
 };
 
-export default UsersScreen2;
+export default UserScreen2;
 
 const styles = StyleSheet.create({});

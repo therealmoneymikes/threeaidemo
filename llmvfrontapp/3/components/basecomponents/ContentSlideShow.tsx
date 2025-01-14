@@ -101,6 +101,7 @@ const ContentSlideShow = ({
       >
         {sliderArray.map((item, index) => (
           <View
+            key={index}
             style={{
               height: deviceScreenHeight * slideViewContainerHeight,
               width: slideViewContainerWidth,
