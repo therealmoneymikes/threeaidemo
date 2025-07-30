@@ -2,7 +2,7 @@ import { StyleSheet, Text, TextInput, View } from "react-native";
 import React from "react";
 import Animated from "react-native-reanimated";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import CustomPressable from "../basecomponents/CustomPressable";
+import CustomPressable from "./CustomPressable";
 import colours from "@/config/colours";
 import { radius, spacingX, spacingY } from "@/config/spacings";
 

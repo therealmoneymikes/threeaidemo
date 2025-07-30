@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import React, { useEffect, useState } from "react";
-import BaseText from "../basecomponents/BaseText";
+import BaseText from "./BaseText";
 import colours from "@/config/colours";
 import { calculateX, calculateY } from "@/utils/screensizing";
 import { spacingY, radius, spacingX } from "@/config/spacings";
@@ -34,10 +34,10 @@ const ProductDetailsSelector = ({ selected, setSelected }: Props) => {
       options === SelectorOptions.DESC
         ? 0
         : options === SelectorOptions.SPEC
-        ? detailsContainerWidth * (1 / 3)
-        : options === SelectorOptions.REV
-        ? detailsContainerWidth * (2 / 3)
-        : 0;
+          ? detailsContainerWidth * (1 / 3)
+          : options === SelectorOptions.REV
+            ? detailsContainerWidth * (2 / 3)
+            : 0;
 
     setStartRange(endRange);
     setEndRange(startRange);
